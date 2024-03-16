@@ -23,6 +23,14 @@ You can detach from it without stopping the container by pressing Ctrl + P follo
 ```
 Type exit or press Ctrl + D. This will stop the shell, which, if it's the main process of the container, will stop the container as well.
 ```
+### Run the docker container
+```
+docker run -d --name <container_name> <image_name> tail -f /dev/null
+```
+### 
+```
+docker exec -it synthetic_data_container bash
+```
 ### Stop the docker container
 ```
 docker stop <container-name-or-id>
