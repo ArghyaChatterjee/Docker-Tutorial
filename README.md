@@ -13,11 +13,23 @@ docker image ls
 ```
 docker container ls
 ```
-### Detach from the container: 
+### Detach from the container
 ```
 If you are attached to the container's shell, you can detach from it without stopping the container by pressing Ctrl + P followed by Ctrl + Q. This key sequence signals Docker to detach from the container, but keeps it running in the background.
 ```
-### Exit the shell: 
+### Exit the shell & Container
 ```
-If you are inside the container's shell (like bash), you can simply type exit or press Ctrl + D. This will stop the shell, which, if it's the main process of the container, will stop the container as well.
+Type exit or press Ctrl + D. This will stop the shell, which, if it's the main process of the container, will stop the container as well.
+```
+### Remove the container
+```
+docker rm <container_name>
+```
+### Remove the image
+```
+docker rmi <image_name>
+```
+### Docker directory in system
+```
+Docker stores its images, containers, volumes, and other data in /var/lib/docker/
 ```
