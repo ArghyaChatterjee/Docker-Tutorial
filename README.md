@@ -15,7 +15,7 @@ docker container ls
 ```
 ### Detach from the container
 ```
-If you are attached to the container's shell, you can detach from it without stopping the container by pressing Ctrl + P followed by Ctrl + Q. This key sequence signals Docker to detach from the container, but keeps it running in the background.
+You can detach from it without stopping the container by pressing Ctrl + P followed by Ctrl + Q if you are attached to the container's shell. This key sequence signals Docker to detach from the container, but keeps it running in the background.
 ```
 ### Exit the shell & Container
 ```
