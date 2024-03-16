@@ -27,7 +27,7 @@ Type exit or press Ctrl + D. This will stop the shell, which, if it's the main p
 ```
 docker run -d --name <container_name> <image_name> tail -f /dev/null
 ```
-### 
+### Start the docker container
 ```
 docker exec -it synthetic_data_container bash
 ```
