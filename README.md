@@ -43,6 +43,10 @@ docker rm <container_name>
 ```
 docker rmi <image_name>
 ```
+### Force remove the image
+```
+docker rmi -f synthetic-data-gen
+```
 ### Docker directory in system
 ```
 Docker stores its images, containers, volumes, and other data in /var/lib/docker/
