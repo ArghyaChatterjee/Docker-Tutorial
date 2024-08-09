@@ -51,3 +51,29 @@ docker rmi -f synthetic-data-gen
 ```
 Docker stores its images, containers, volumes, and other data in /var/lib/docker/
 ```
+### Stop and Remove All Running Containers
+```
+docker container stop $(docker container ls -aq)
+docker container rm $(docker container ls -aq)
+```
+### Remove All Images
+```
+docker rmi $(docker image ls -aq)
+```
+### Remove Build Cache
+```
+docker builder prune -f
+```
+### Remove All Volumes
+```
+docker volume rm $(docker volume ls -q)
+```
+### Remove All Networks
+```
+docker network prune -f
+```
+### Remove Everything at Once
+If you want to remove everything (containers, images, volumes, and networks) in one go, you can use:
+```
+docker system prune -a --volumes -f
+```
