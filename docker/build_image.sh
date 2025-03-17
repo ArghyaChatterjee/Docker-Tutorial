@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Build the Docker image
-echo "Building Docker image 'm3t_hand_pose:latest'..."
-docker build -t m3t_hand_pose:latest . || { echo "Docker build failed"; exit 1; }
+echo "Building Docker image 'm3t_image:latest'..."
+docker build -t m3t_image:latest . || { echo "Docker build failed"; exit 1; }
 
 echo "Docker image built successfully!"
 
