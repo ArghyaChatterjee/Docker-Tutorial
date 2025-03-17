@@ -14,4 +14,4 @@ xhost + && docker run --gpus all --env NVIDIA_DISABLE_REQUIRE=1 -it --network=ho
     --ipc=host \
     -e DISPLAY=${DISPLAY} \
     -e GIT_INDEX_FILE \
-    m3t_hand_pose:latest bash -c "cd $DIR && bash"
+    m3t_image:latest bash -c "cd $DIR && bash"
