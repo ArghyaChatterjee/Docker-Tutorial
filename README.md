@@ -2,6 +2,7 @@
 This repository is all about docker tutorial and cheat sheets.
 
 ## Running Docker 
+### Build Image and Run Container
 In this repo, there is a sample Dockerfile. Build it this way:
 ```
 cd docker
@@ -12,6 +13,18 @@ Then, run a container from the image that you built:
 ```
 chmod +x run_container.sh
 ./run_container.sh
+```
+### Build and Run Image and Attach Container
+There is a another sample Dockerfile. Build image and run container in one go:
+```
+cd docker
+chmod +x build_image_and_run_container.sh
+./build_image_and_run_container.sh
+```
+Then, enter into the already existing container:
+```
+chmod +x attach_container.sh
+./attach_container.sh
 ```
 ## Docker Cheat Sheet
 ### If your system's memory is full due to docker:
