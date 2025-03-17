@@ -1,6 +1,19 @@
 # All-About-Docker
-This repository is all about docker cheat sheets.
+This repository is all about docker tutorial and cheat sheets.
 
+## Running Docker 
+In this repo, there is a sample Dockerfile. Build it this way:
+```
+cd docker
+chmod +x build_image.sh
+./build_image.sh
+```
+Then, run a container from the image that you built:
+```
+chmod +x run_container.sh
+./run_container.sh
+```
+## Docker Cheat Sheet
 ### If your system's memory is full due to docker:
 ```
 docker system prune
