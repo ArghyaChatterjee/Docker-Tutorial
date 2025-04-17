@@ -25,8 +25,9 @@ To install the latest version, run:
 ```
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
+Add current user to the docker group:
 ```
-sudo groupadd docker        # (Skip if you've already done it)
+sudo groupadd docker      
 sudo usermod -aG docker $USER
 newgrp docker
 ```
@@ -35,6 +36,33 @@ newgrp docker
 Verify that the installation is successful by running the hello-world image:
 ```bash
 docker run hello-world
+```
+## Install Nvidia Container Toolkit
+### Configuring Docker
+Configure the container runtime by using the `nvidia-ctk` command:
+```
+sudo nvidia-ctk runtime configure --runtime=docker
+```
+The nvidia-ctk command modifies the `/etc/docker/daemon.json` file on the host. The file is updated so that Docker can use the NVIDIA Container Runtime.
+
+Restart the Docker daemon:
+```
+sudo systemctl restart docker
+```
+### Rootless mode
+To configure the container runtime for Docker running in Rootless mode, follow these steps:
+
+Configure the container runtime by using the nvidia-ctk command:
+```
+nvidia-ctk runtime configure --runtime=docker --config=$HOME/.config/docker/daemon.json
+```
+Restart the Rootless Docker daemon:
+```
+systemctl --user restart docker
+```
+Configure `/etc/nvidia-container-runtime/config.toml` by using the `sudo nvidia-ctk` command:
+```
+sudo nvidia-ctk config --set nvidia-container-cli.no-cgroups --in-place
 ```
 ## Running Docker 
 ### Build Image and Run Container
