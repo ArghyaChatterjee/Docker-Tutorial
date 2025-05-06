@@ -189,3 +189,89 @@ If you want to remove everything (containers, images, volumes, and networks) in 
 ```
 docker system prune -a --volumes -f
 ```
+## Access Docker Container to and from Host
+After cloning the current repo, you have to set the `$ROS_DOMAIN_ID` correctly to the host and docker. Set it to the host terminal and inside the `.bashrc` file:
+```
+export ROS_DOMAIN_ID=166
+```
+This assumes the docker is being run as `root` and the host is being run as `$USER`.
+```
+cd ros2_docker_demo
+docker run -it --rm   --env ROS_DOMAIN_ID=166   --env RMW_IMPLEMENTATION=rmw_fastrtps_cpp   --volume /dev/shm:/dev/shm   --name ros2_listener   ros2_jazzy_demo   bash
+apt update
+apt install ros-jazzy-demo-nodes-cpp
+```
+Then, try the first demo:
+```
+ros2 run demo_nodes_cpp talker
+```
+You will see:
+```
+root@arghya:/ros2_ws# ros2 run demo_nodes_cpp talker
+[INFO] [1746566639.785472203] [talker]: Publishing: 'Hello World: 1'
+[INFO] [1746566640.785383631] [talker]: Publishing: 'Hello World: 2'
+[INFO] [1746566641.785467609] [talker]: Publishing: 'Hello World: 3'
+[INFO] [1746566642.785453459] [talker]: Publishing: 'Hello World: 4'
+```
+On the host machine, run this (assumes ros2 is installed):
+```
+ros2 run demo_nodes_cpp listener
+```
+You will see:
+```
+arghya@arghya:~$ ros2 run demo_nodes_cpp listener
+[INFO] [1746566944.554639897] [listener]: I heard: [Hello World: 1]
+[INFO] [1746566945.554418037] [listener]: I heard: [Hello World: 2]
+[INFO] [1746566946.554225905] [listener]: I heard: [Hello World: 3]
+[INFO] [1746566947.554156548] [listener]: I heard: [Hello World: 4]
+```
+If you want to use `--net=host`, then you have to do the following:
+```
+docker run -it --rm   --net=host   --ipc=host   --env ROS_DOMAIN_ID=166   --env RMW_IMPLEMENTATION=rmw_fastrtps_cpp   --volume /dev/shm:/dev/shm   --name ros2_listener   ros2_jazzy_demo   bash
+```
+If it's not working, the problem is due to the SHM transport. When you launch a Docker with --net=host and --ipc=host configuration, the publisher and subscriber detect that they are on the same host and try to use SHM. This is due to how the calculation of SHM usage was done until now. In addition, SHM uses the `/dev/shm` directory, which in this case is being attempted to be shared by users who have different permissions: `root` in the case of Docker and `$USER` in the case of the host. This causes communication to fail.
+
+To fix this you have several quick solutions:
+
+- Have the same user on Docker as on the host. For example, docker and host both will have `$USER` or they both will have `root`. 
+- Launch the ROS 2 application as root (equivalent to the above but without changing the Docker configuration).
+- Use UDP instead of SHM. This is as simple as running ```- export FASTDDS_BUILTIN_TRANSPORTS=UDPv4``` before launching the ROS 2 application in the Docker.
+- Do not set --ipc=host --net=host when running the Docker container.
+
+You can also disable the `shm`. These are the following ways:
+
+1. Clean SHM segments:
+Run this to clear leftover shared memory files:
+```
+sudo find /dev/shm/ -name 'fastrtps_*' -exec rm -f {} \;
+```
+2. Disable SHM transport (as a workaround):
+You can disable Fast DDS shared memory transport (uses UDP instead). Add this to your environment:
+```
+export FASTRTPS_DEFAULT_PROFILES_FILE=""
+```
+Or create a profile that disables SHM:
+```
+<!-- ~/.ros/disable_shm.xml -->
+<profiles>
+  <transport_descriptors>
+    <transport_descriptor>
+      <transport_id>udp</transport_id>
+      <type>UDPv4</type>
+    </transport_descriptor>
+  </transport_descriptors>
+</profiles>
+```
+And set:
+
+```
+export FASTRTPS_DEFAULT_PROFILES_FILE=~/.ros/disable_shm.xml
+```
+3. Check Docker Shared Memory (if running in container)
+If you're running the ros2 node in Docker, make sure the container has access to enough shared memory:
+
+```
+docker run --shm-size=512m ...  
+```
+A detailed description is described [here](https://github.com/eProsima/Fast-DDS/issues/5396).
+
