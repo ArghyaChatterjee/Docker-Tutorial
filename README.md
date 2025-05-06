@@ -240,13 +240,11 @@ To fix this you have several quick solutions:
 
 You can also disable the `shm`. These are the following ways:
 
-1. Clean SHM segments:
-Run this to clear leftover shared memory files:
+- Clean SHM segments: Run this to clear leftover shared memory files:
 ```
 sudo find /dev/shm/ -name 'fastrtps_*' -exec rm -f {} \;
 ```
-2. Disable SHM transport (as a workaround):
-You can disable Fast DDS shared memory transport (uses UDP instead). Add this to your environment:
+- Disable SHM transport (as a workaround): You can disable Fast DDS shared memory transport (uses UDP instead). Add this to your environment:
 ```
 export FASTRTPS_DEFAULT_PROFILES_FILE=""
 ```
@@ -267,8 +265,7 @@ And set:
 ```
 export FASTRTPS_DEFAULT_PROFILES_FILE=~/.ros/disable_shm.xml
 ```
-3. Check Docker Shared Memory (if running in container)
-If you're running the ros2 node in Docker, make sure the container has access to enough shared memory:
+- Check Docker Shared Memory (if running in container): If you're running the ros2 node in Docker, make sure the container has access to enough shared memory:
 
 ```
 docker run --shm-size=512m ...  
