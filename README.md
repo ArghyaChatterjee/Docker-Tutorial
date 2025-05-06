@@ -194,7 +194,12 @@ After cloning the current repo, you have to set the `$ROS_DOMAIN_ID` correctly t
 ```
 export ROS_DOMAIN_ID=166
 ```
-This assumes the docker is being run as `root` and the host is being run as `$USER`.
+This assumes the docker is being run as `root` and the host is being run as `$USER`. Now, build the docker container:
+```
+cd ros2_docker_demo
+docker build -t ros2_jazzy_demo .
+```
+Now, run the docker container:
 ```
 cd ros2_docker_demo
 docker run -it --rm   --env ROS_DOMAIN_ID=166   --env RMW_IMPLEMENTATION=rmw_fastrtps_cpp   --volume /dev/shm:/dev/shm   --name ros2_listener   ros2_jazzy_demo   bash
