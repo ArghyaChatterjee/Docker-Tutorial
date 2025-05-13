@@ -277,3 +277,12 @@ docker run --shm-size=512m ...
 ```
 A detailed description is described [here](https://github.com/eProsima/Fast-DDS/issues/5396).
 
+## Change Permission for Docker Generated Files
+If you run a process inside the docker container, it may generate some files. Here is how you want to change the access permission to those files /folder:
+```
+sudo chown -R $USER:$USER ./<folder name>
+```
+## Sources
+- https://github.com/ArghyaChatterjee/SubT-Docker-Setup
+- https://github.com/NVlabs/BundleSDF/tree/master/docker
+- https://github.com/leggedrobotics/rsl_panoptic
