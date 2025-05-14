@@ -220,6 +220,7 @@ root@arghya:/ros2_ws# ros2 run demo_nodes_cpp talker
 ```
 On the host machine, run this (assumes ros2 is installed):
 ```
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 ros2 run demo_nodes_cpp listener
 ```
 You will see:
