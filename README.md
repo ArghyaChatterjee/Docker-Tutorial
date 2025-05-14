@@ -286,3 +286,4 @@ sudo chown -R $USER:$USER ./<folder name>
 - https://github.com/ArghyaChatterjee/SubT-Docker-Setup
 - https://github.com/NVlabs/BundleSDF/tree/master/docker
 - https://github.com/leggedrobotics/rsl_panoptic
+- https://github.com/dfki-ric/docker_image_development
