@@ -7,6 +7,9 @@ PROJECT_DIR=$(cd "$DOCKER_DIR/.." && pwd)
 echo "Building Docker image 'm3t_image:latest'..."
 docker build -t m3t_image:latest "$DOCKER_DIR" || { echo "Docker build failed"; exit 1; }
 
+# Build Docker image with logs without any cache 
+# docker build --no-cache --progress=plain -f Dockerfile.realsense -t m3t_image:0.0.2 . 2>&1 | tee docker_build.log
+
 echo "Docker image built successfully!"
 
 # Allow GUI connections
