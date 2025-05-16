@@ -135,6 +135,23 @@ You can detach from it without stopping the container by pressing Ctrl + P follo
 ```
 Type exit or press Ctrl + D. This will stop the shell, which, if it's the main process of the container, will stop the container as well.
 ```
+### Build the docker image
+Build the docker image with cache without filename and logs:
+```
+docker build -t <docker_name>:0.0.2 .
+```
+Build the docker image without filename, cache and logs:
+```
+docker build --no-cache -t <docker_name>:0.0.2 .
+```
+Build the docker with file names without cache and logs:
+```
+docker build --no-cache -f Dockerfile.x -t <docker_name>:0.0.2 .
+```
+Build the docker with file names and logs without cache:
+```
+docker build --no-cache --progress=plain -f Dockerfile.realsense -t foundationpose-ros2:0.0.2 . 2>&1 | tee docker_build.log
+```
 ### Run the docker container
 ```
 docker run -d --name <container_name> <image_name> tail -f /dev/null
