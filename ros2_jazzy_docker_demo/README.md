@@ -32,6 +32,8 @@ This node publishes to `/chatter`.
 
 ```bash
 docker build -t ros2_jazzy_demo .
+# Build Docker image with logs 
+# docker build --no-cache --progress=plain -f Dockerfile -t ros2_jazzy_demo . 2>&1 | tee docker_build.log
 ```
 
 2. **Run the container:**
