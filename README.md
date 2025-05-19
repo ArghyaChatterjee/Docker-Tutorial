@@ -216,6 +216,10 @@ This assumes the docker is being run as `root` and the host is being run as `$US
 cd ros2_jazzy_docker_demo
 docker build -t ros2_jazzy_demo .
 ```
+Before running the container, you have to give docker access to the shared memory of the host:
+```
+sudo chmod 777 -R /dev/shm
+```
 Now, run the docker container:
 ```
 cd ros2_docker_demo
